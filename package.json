@@ -1,0 +1,18 @@
+{
+  "name": "omniforge-ai",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:web": "npm run dev --workspace=@omniforge/web",
+    "build:web": "npm run build --workspace=@omniforge/web",
+    "lint": "npm run lint --workspace=@omniforge/web",
+    "test:web": "npm run test --workspace=@omniforge/web"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  }
+}

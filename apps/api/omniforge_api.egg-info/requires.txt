@@ -1,0 +1,10 @@
+fastapi<1.0,>=0.115
+google-genai<2.0,>=1.0
+httpx<1.0,>=0.27
+pydantic-settings<3.0,>=2.6
+PyJWT[crypto]<3.0,>=2.10
+uvicorn[standard]<1.0,>=0.32
+
+[dev]
+pytest<9.0,>=8.3
+pytest-asyncio<1.0,>=0.24

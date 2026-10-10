@@ -1,0 +1,1 @@
+"""OmniForge AI FastAPI application."""
