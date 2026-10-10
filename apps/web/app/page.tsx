@@ -1,83 +1,54 @@
-import { FileText, Layers3, Sparkles } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import Link from "next/link";
+import { Boxes, Braces, HeartPulse } from "lucide-react";
+import { Card } from "@/components/ui/card";
+import { HealthStatus } from "@/features/health/components/health-status";
 
-const previewJobs = [
-  { title: "Product launch narrative", channel: "LinkedIn", state: "Draft ready", updated: "8m ago" },
-  { title: "Founder perspective thread", channel: "X", state: "In review", updated: "32m ago" },
-  { title: "October editorial brief", channel: "Blog", state: "Briefing", updated: "1h ago" },
+const foundationItems = [
+  { icon: Boxes, title: "App Router foundation", description: "Routes, reusable UI primitives, feature modules, and typed utilities are ready to grow." },
+  { icon: Braces, title: "Typed API boundary", description: "The browser calls the FastAPI service through NEXT_PUBLIC_API_BASE_URL, not hardcoded hosts." },
+  { icon: HeartPulse, title: "Verified health path", description: "A live backend health check makes the first integration visible without a placeholder action." },
 ];
 
 export default function Home() {
   return (
-    <main className="min-h-screen p-5 sm:p-8">
-      <section className="mx-auto max-w-6xl">
+    <main className="min-h-screen px-5 py-8 sm:px-8 sm:py-12">
+      <div className="mx-auto max-w-5xl">
         <header className="flex items-center justify-between border-b border-slate-200 pb-5">
-          <div className="flex items-center gap-3">
-            <div className="grid size-10 place-items-center rounded-xl bg-indigo-600 text-white"><Sparkles size={20} /></div>
-            <div>
-              <p className="font-semibold tracking-tight">OmniForge AI</p>
-              <p className="text-sm text-slate-500">Content intelligence workspace</p>
-            </div>
+          <div>
+            <p className="text-lg font-semibold tracking-tight text-slate-950">OmniForge AI</p>
+            <p className="text-sm text-slate-500">SaaS application foundation</p>
           </div>
-          <Badge>UI preview</Badge>
+          <Link className="text-sm font-semibold text-indigo-700 underline underline-offset-4" href="/status">
+            Service status
+          </Link>
         </header>
 
-        <div className="mt-10 grid gap-8 lg:grid-cols-[1.5fr_1fr]">
-          <section>
-            <p className="text-sm font-semibold text-indigo-600">WORKSPACE OVERVIEW</p>
-            <h1 className="mt-3 text-4xl font-semibold tracking-tight text-slate-950 sm:text-5xl">
-              One source of truth for your brand voice.
+        <section className="grid gap-8 py-14 lg:grid-cols-[1.25fr_0.75fr]">
+          <div>
+            <p className="text-sm font-semibold tracking-wider text-indigo-600">FIRST MILESTONE</p>
+            <h1 className="mt-3 max-w-2xl text-4xl font-semibold tracking-tight text-slate-950 sm:text-5xl">
+              A clean platform foundation for OmniForge AI.
             </h1>
-            <p className="mt-4 max-w-2xl text-lg leading-8 text-slate-600">
-              Shape multi-platform content from approved brand context, with every draft and source document kept in its workspace.
+            <p className="mt-5 max-w-xl text-lg leading-8 text-slate-600">
+              This scaffold connects a typed Next.js frontend to FastAPI. AI, authentication, and database features are intentionally deferred.
             </p>
-
-            <div className="mt-8 grid gap-4 sm:grid-cols-3">
-              <Stat icon={<Layers3 size={18} />} label="Active drafts" value="12" />
-              <Stat icon={<FileText size={18} />} label="Source documents" value="28" />
-              <Stat icon={<Sparkles size={18} />} label="Voice signals" value="6" />
-            </div>
-          </section>
-
-          <aside className="rounded-2xl border border-indigo-100 bg-indigo-50 p-6">
-            <Badge className="border-white bg-white">First milestone</Badge>
-            <h2 className="mt-4 text-xl font-semibold text-slate-950">A real foundation, deliberately unfinished.</h2>
-            <p className="mt-3 text-sm leading-6 text-slate-600">
-              This view uses clearly labelled preview data while authenticated workspaces, document processing, and generation flows are connected.
-            </p>
-            <p className="mt-5 text-sm font-semibold text-indigo-700">API-ready architecture is documented in this repository.</p>
-          </aside>
-        </div>
-
-        <section className="mt-12 rounded-2xl border border-slate-200 bg-white">
-          <div className="flex items-baseline justify-between gap-4 border-b border-slate-100 px-6 py-5">
-            <div>
-              <h2 className="text-lg font-semibold">Recent content work</h2>
-              <p className="mt-1 text-sm text-slate-500">Preview fixtures — these jobs are not yet persisted.</p>
-            </div>
           </div>
-          <ul className="divide-y divide-slate-100" aria-label="Preview content jobs">
-            {previewJobs.map((job) => (
-              <li key={job.title} className="flex items-center justify-between gap-4 px-6 py-5">
-                <div>
-                  <p className="font-medium text-slate-900">{job.title}</p>
-                  <p className="mt-1 text-sm text-slate-500">{job.channel} · {job.updated}</p>
-                </div>
-                <Badge className="shrink-0 border-slate-200 bg-slate-50 text-slate-700">{job.state}</Badge>
-              </li>
-            ))}
-          </ul>
+          <HealthStatus />
         </section>
-      </section>
-    </main>
-  );
-}
 
-function Stat({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
-  return (
-    <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
-      <div className="flex items-center gap-2 text-slate-500">{icon}<span className="text-sm">{label}</span></div>
-      <p className="mt-3 text-2xl font-semibold text-slate-950">{value}</p>
-    </div>
+        <section aria-labelledby="foundation-heading">
+          <h2 id="foundation-heading" className="text-xl font-semibold text-slate-950">Included now</h2>
+          <div className="mt-4 grid gap-4 md:grid-cols-3">
+            {foundationItems.map(({ icon: Icon, title, description }) => (
+              <Card key={title}>
+                <Icon className="text-indigo-600" size={22} aria-hidden="true" />
+                <h3 className="mt-4 font-semibold text-slate-950">{title}</h3>
+                <p className="mt-2 text-sm leading-6 text-slate-600">{description}</p>
+              </Card>
+            ))}
+          </div>
+        </section>
+      </div>
+    </main>
   );
 }

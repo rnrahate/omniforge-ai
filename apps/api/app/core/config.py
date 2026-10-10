@@ -1,19 +1,18 @@
 from functools import lru_cache
+from pathlib import Path
 
-from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-    """Server configuration loaded only from process environment or an API .env file."""
+    """Server configuration loaded from process environment or an API .env file."""
 
-    model_config = SettingsConfigDict(env_file=".env", extra="ignore")
+    model_config = SettingsConfigDict(
+        env_file=Path(__file__).resolve().parents[2] / ".env",
+        extra="ignore",
+    )
 
-    supabase_url: str | None = None
-    supabase_jwt_audience: str = "authenticated"
-    gemini_api_key: str | None = None
-    gemini_model: str = "gemini-2.5-flash"
-    cors_origins: str = Field(default="http://localhost:3000")
+    cors_origins: str = "http://localhost:3000"
 
     @property
     def allowed_origins(self) -> list[str]:

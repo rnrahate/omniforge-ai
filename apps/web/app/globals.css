@@ -1,5 +1,6 @@
 @import "tailwindcss";
 
+@layer base {
 :root {
   --background: #f8fafc;
   --foreground: #0f172a;
@@ -9,7 +10,7 @@
   --brand: #4f46e5;
 }
 
-* { box-sizing: border-box; }
+html, body { box-sizing: border-box; }
 
 html { background: var(--background); }
 
@@ -22,7 +23,8 @@ body {
 
 a { color: inherit; }
 
-:focus-visible {
+:where(a, button, input, textarea, select):focus-visible {
   outline: 3px solid #818cf8;
   outline-offset: 3px;
+}
 }

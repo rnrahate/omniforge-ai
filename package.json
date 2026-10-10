@@ -10,7 +10,8 @@
     "dev:web": "npm run dev --workspace=@omniforge/web",
     "build:web": "npm run build --workspace=@omniforge/web",
     "lint": "npm run lint --workspace=@omniforge/web",
-    "test:web": "npm run test --workspace=@omniforge/web"
+    "test:web": "npm run test --workspace=@omniforge/web",
+    "test:api": ".\\.venv\\Scripts\\python.exe -m pytest apps/api/tests"
   },
   "engines": {
     "node": ">=22.0.0"

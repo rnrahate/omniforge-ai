@@ -1,31 +1,80 @@
 # OmniForge AI
 
-OmniForge AI is a multi-platform content-creation and brand-intelligence SaaS.
-The first milestone is a modular monorepo: a Next.js web client, a FastAPI AI
-service, and Supabase migrations/policies. It intentionally has no microservice
-mesh, queue, vector database, Redis, LangGraph, or model fine-tuning layer.
+OmniForge AI starts as a focused full-stack foundation: a Next.js App Router
+frontend and a separate FastAPI backend. This milestone intentionally contains
+no AI provider, authentication, database, or external service integration.
 
-## Architecture
+## Structure
 
 ```text
-Browser -> Next.js web -> FastAPI AI/document API -> Gemini
-     \-> Supabase Auth, PostgreSQL and private Storage
+apps/
+  web/                  Next.js, TypeScript, Tailwind, shadcn-compatible UI
+    app/                routes: / and /status
+    components/         reusable UI primitives
+    features/health/    health-status feature module
+    lib/api/            typed FastAPI client
+  api/                  FastAPI and Pydantic service
+    app/routers/        HTTP routes
+    app/schemas/        Pydantic request/response types
+    app/services/       application logic
+    app/core/           configuration
+    tests/              API tests
 ```
 
-The browser only receives public Supabase configuration. Gemini and Supabase
-service-role credentials are server-only. The FastAPI API verifies Supabase
-bearer tokens before protected operations.
+## API
 
-See [docs/architecture.md](docs/architecture.md) and
-[docs/local-development.md](docs/local-development.md) for the maintained
-architecture decisions and setup instructions.
+- `GET /api/health` returns the liveness of the FastAPI process.
+- The web client calls it through `NEXT_PUBLIC_API_BASE_URL`.
+- Local CORS is explicitly limited to `http://localhost:3000` by default. Set
+  `CORS_ORIGINS` to a comma-separated allowlist when using another frontend origin.
 
-## Quick start
+## Windows PowerShell
 
-1. Create environment files from `apps/web/.env.example` and
-   `apps/api/.env.example`.
-2. Install JavaScript dependencies with `npm install`.
-3. Create a Python virtual environment and install API dependencies.
-4. Start Supabase locally, then start the web and API apps in separate terminals.
+```powershell
+# Install frontend dependencies (run once)
+npm install
 
-Detailed, Windows-friendly commands are in the local-development guide.
+# Create local environment files
+Copy-Item apps/web/.env.example apps/web/.env.local
+Copy-Item apps/api/.env.example apps/api/.env
+
+# Create and install the isolated Python environment (run once)
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -e ".\apps\api[dev]"
+
+# Terminal 1: FastAPI
+.\.venv\Scripts\python.exe -m uvicorn app.main:app --app-dir apps/api --reload --port 8000
+
+# Terminal 2: Next.js
+npm run dev:web
+```
+
+Open `http://localhost:3000` and `http://localhost:8000/api/health`.
+
+## macOS and Linux
+
+```bash
+npm install
+cp apps/web/.env.example apps/web/.env.local
+cp apps/api/.env.example apps/api/.env
+python3 -m venv .venv
+.venv/bin/python -m pip install -e './apps/api[dev]'
+
+# Terminal 1
+.venv/bin/python -m uvicorn app.main:app --app-dir apps/api --reload --port 8000
+
+# Terminal 2
+npm run dev:web
+```
+
+## Checks
+
+```powershell
+npm run lint
+npm run test:web
+npm run build:web
+npm run test:api
+```
+
+The web health indicator reports the live response from FastAPI; it does not
+pretend unavailable services are working.

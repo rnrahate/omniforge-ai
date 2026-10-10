@@ -8,13 +8,13 @@ __pycache__/
 .pytest_cache/
 .venv/
 *.py[cod]
+*.egg-info/
 
 # Environment and local tooling
 .env
 .env.*
 !.env.example
 !.env.*.example
-.supabase/
 
 # Editor and operating system files
 .DS_Store
